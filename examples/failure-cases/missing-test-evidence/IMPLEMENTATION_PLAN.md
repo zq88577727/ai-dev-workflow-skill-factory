@@ -1,0 +1,3 @@
+# IMPLEMENTATION PLAN
+
+Minimal fixture.

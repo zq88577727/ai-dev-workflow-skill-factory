@@ -1,0 +1,3 @@
+# ARCHITECTURE
+
+Minimal fixture.

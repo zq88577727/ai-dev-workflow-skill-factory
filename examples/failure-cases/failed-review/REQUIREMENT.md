@@ -1,0 +1,3 @@
+# REQUIREMENT
+
+Minimal fixture.

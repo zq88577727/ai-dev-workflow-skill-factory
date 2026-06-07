@@ -1,0 +1,26 @@
+{
+  "workflow": "ai-dev-workflow-factory",
+  "status": "draft",
+  "currentState": "S0",
+  "artifacts": {
+    "projectBrief": "",
+    "architecture": "",
+    "projectRules": "",
+    "requirement": "",
+    "technicalDesign": "",
+    "implementationPlan": "",
+    "reviewReport": "",
+    "generatedWorkflowSkill": ""
+  },
+  "confirmations": {
+    "requirement": false,
+    "technicalDesign": false,
+    "highRiskOperations": []
+  },
+  "checks": {
+    "logicReview": "not-run",
+    "buildReview": "not-run",
+    "tests": "not-run"
+  },
+  "lessons": []
+}

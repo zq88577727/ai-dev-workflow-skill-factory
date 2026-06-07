@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/2023Anita/ai-dev-workflow-skill-factory/workflow-run.schema.json",
+  "title": "AI Dev Workflow Run",
+  "type": "object",
+  "required": ["workflow", "status", "currentState", "artifacts", "confirmations", "checks", "lessons"],
+  "additionalProperties": false,
+  "properties": {
+    "workflow": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "type": "string",
+      "enum": ["draft", "in-progress", "blocked", "complete", "example"]
+    },
+    "currentState": {
+      "type": "string",
+      "enum": ["S0", "S1", "S2", "S3", "S4", "S5", "S6", "S7", "S8", "S9", "S10", "S11"]
+    },
+    "artifacts": {
+      "type": "object",
+      "required": ["projectBrief", "architecture", "projectRules", "requirement", "technicalDesign", "implementationPlan", "reviewReport"],
+      "additionalProperties": false,
+      "properties": {
+        "projectBrief": { "type": "string" },
+        "architecture": { "type": "string" },
+        "projectRules": { "type": "string" },
+        "requirement": { "type": "string" },
+        "technicalDesign": { "type": "string" },
+        "implementationPlan": { "type": "string" },
+        "reviewReport": { "type": "string" },
+        "generatedWorkflowSkill": { "type": "string" }
+      }
+    },
+    "confirmations": {
+      "type": "object",
+      "required": ["requirement", "technicalDesign", "highRiskOperations"],
+      "additionalProperties": false,
+      "properties": {
+        "requirement": { "type": "boolean" },
+        "technicalDesign": { "type": "boolean" },
+        "highRiskOperations": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "checks": {
+      "type": "object",
+      "required": ["logicReview", "buildReview", "tests"],
+      "additionalProperties": false,
+      "properties": {
+        "logicReview": { "type": "string", "enum": ["pass", "fail", "not-run"] },
+        "buildReview": { "type": "string", "enum": ["pass", "fail", "not-run"] },
+        "tests": { "type": "string", "enum": ["pass", "fail", "not-run"] }
+      }
+    },
+    "lessons": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  }
+}

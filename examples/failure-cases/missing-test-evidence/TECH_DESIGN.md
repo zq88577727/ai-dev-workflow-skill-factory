@@ -1,0 +1,3 @@
+# TECHNICAL DESIGN
+
+Minimal fixture.

@@ -1,0 +1,25 @@
+{
+  "workflow": "ai-dev-workflow-factory",
+  "status": "example",
+  "currentState": "S8",
+  "artifacts": {
+    "projectBrief": "project-brief.md",
+    "architecture": "ARCHITECTURE.md",
+    "projectRules": "PROJECT_RULES.md",
+    "requirement": "REQUIREMENT.md",
+    "technicalDesign": "TECH_DESIGN.md",
+    "implementationPlan": "IMPLEMENTATION_PLAN.md",
+    "reviewReport": "REVIEW_REPORT.md"
+  },
+  "confirmations": {
+    "requirement": true,
+    "technicalDesign": true,
+    "highRiskOperations": []
+  },
+  "checks": {
+    "logicReview": "fail",
+    "buildReview": "pass",
+    "tests": "pass"
+  },
+  "lessons": []
+}
