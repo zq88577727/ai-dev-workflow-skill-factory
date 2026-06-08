@@ -5,6 +5,7 @@
   "type": "module",
   "description": "A reusable workflow orchestrator skill template for controlled AI-assisted software development.",
   "scripts": {
+    "init": "node skills/ai-dev-workflow-factory/scripts/init-workflow.mjs",
     "validate": "node skills/ai-dev-workflow-factory/scripts/validate-ai-dev-workflow.mjs --root examples/demo-project-workflow --require-review --require-run --strict",
     "test": "node skills/ai-dev-workflow-factory/scripts/test-validator.mjs"
   },

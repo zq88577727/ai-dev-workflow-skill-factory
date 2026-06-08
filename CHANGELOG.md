@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+- Fixed the workflow schema id to match the current repository.
+- Added schema-backed validation for `workflow-run.json`.
+- Added an `npm run init` command for generating workflow artifact workspaces.
+- Added tooling, compatibility, roadmap and contribution documentation.
+
 ## 0.2.0 - 2026-06-07
 
 - Added strict workflow validation for states, confirmations, artifact paths, review status and test status.

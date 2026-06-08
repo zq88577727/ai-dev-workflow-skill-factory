@@ -2,7 +2,7 @@
 
 The validator has two levels:
 
-- Default mode checks required artifacts, non-empty files and basic JSON shape.
+- Default mode checks required artifacts, non-empty files and `workflow-run.schema.json`.
 - Strict mode also checks confirmation gates, valid workflow states, artifact path consistency, review status, test status and review evidence.
 
 Run the complete suite:
@@ -26,6 +26,15 @@ node "skills/ai-dev-workflow-factory/scripts/validate-ai-dev-workflow.mjs" \
   --require-run \
   --strict
 ```
+
+Initialize a new workflow workspace from templates:
+
+```bash
+npm run init -- --target work/my-project-workflow
+```
+
+Use `--force` only when you intentionally want to overwrite existing generated
+workflow artifacts in that target directory.
 
 Strict validation is intentionally conservative. If build or tests were not run,
 `REVIEW_REPORT.md` must explain the residual risk instead of marking the workflow

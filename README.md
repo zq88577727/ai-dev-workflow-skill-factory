@@ -78,7 +78,13 @@ ai-dev-workflow-skill-factory/
 1. 把 `skills/ai-dev-workflow-factory/` 复制到你的 skill 仓库或项目文档库。
 2. 在 AI 编程工具里触发 `ai-dev-workflow-factory`。
 3. 用一个项目想法、粗需求、旧项目目录或团队痛点作为输入。
-4. 按状态机生成并确认以下产物：
+4. 可选：先初始化一套可填写的 workflow 产物。
+
+```bash
+npm run init -- --target work/my-project-workflow
+```
+
+5. 按状态机生成并确认以下产物：
 
 ```text
 project-brief.md
@@ -92,7 +98,7 @@ workflow-run.json
 generated-workflow-skill.md
 ```
 
-5. 运行验收脚本，失败就回到对应状态修正。
+6. 运行验收脚本，失败就回到对应状态修正。
 
 也可以在仓库根目录直接运行：
 
@@ -103,6 +109,7 @@ npm test
 这会验证完整 demo，并确认 `examples/failure-cases/` 下的坏案例会被严格模式拦住。
 
 更多校验细节见 [`docs/validation.md`](docs/validation.md)。
+工具落地步骤见 [`docs/tooling.md`](docs/tooling.md)，维护路线见 [`docs/roadmap.md`](docs/roadmap.md) 和 [`docs/compatibility.md`](docs/compatibility.md)。
 
 ## 适用场景
 

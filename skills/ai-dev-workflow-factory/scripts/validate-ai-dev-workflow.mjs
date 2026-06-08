@@ -2,8 +2,11 @@
 
 import fs from "node:fs";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 
 const args = process.argv.slice(2);
+const scriptDir = path.dirname(fileURLToPath(import.meta.url));
+const schemaPath = path.join(scriptDir, "..", "workflow-run.schema.json");
 const VALID_STATES = new Set(["S0", "S1", "S2", "S3", "S4", "S5", "S6", "S7", "S8", "S9", "S10", "S11"]);
 const VALID_STATUSES = new Set(["draft", "in-progress", "blocked", "complete", "example"]);
 const VALID_CHECKS = new Set(["pass", "fail", "not-run"]);
@@ -61,11 +64,75 @@ function readJson(filePath, issues, label) {
   }
 }
 
-function validateWorkflowRunShape(run, issues) {
+function validateAgainstSchema(value, schema, issues, location = "workflow-run.json") {
+  if (!isObject(schema)) return;
+
+  if (schema.type === "object") {
+    if (!isObject(value)) {
+      issues.push(`${location} must be an object`);
+      return;
+    }
+
+    for (const key of schema.required ?? []) {
+      if (!(key in value)) {
+        issues.push(`${location}.${key} is required`);
+      }
+    }
+
+    if (schema.additionalProperties === false) {
+      for (const key of Object.keys(value)) {
+        if (!schema.properties || !(key in schema.properties)) {
+          issues.push(`${location}.${key} is not allowed`);
+        }
+      }
+    }
+
+    for (const [key, childSchema] of Object.entries(schema.properties ?? {})) {
+      if (key in value) validateAgainstSchema(value[key], childSchema, issues, `${location}.${key}`);
+    }
+
+    return;
+  }
+
+  if (schema.type === "array") {
+    if (!Array.isArray(value)) {
+      issues.push(`${location} must be an array`);
+      return;
+    }
+
+    if (schema.items) {
+      value.forEach((item, index) => validateAgainstSchema(item, schema.items, issues, `${location}[${index}]`));
+    }
+
+    return;
+  }
+
+  if (schema.type === "string") {
+    if (typeof value !== "string") {
+      issues.push(`${location} must be a string`);
+      return;
+    }
+    if (schema.minLength && value.length < schema.minLength) {
+      issues.push(`${location} must have length >= ${schema.minLength}`);
+    }
+    if (schema.enum && !schema.enum.includes(value)) {
+      issues.push(`${location} must be one of: ${schema.enum.join(", ")}`);
+    }
+    return;
+  }
+
+  if (schema.type === "boolean" && typeof value !== "boolean") {
+    issues.push(`${location} must be boolean`);
+  }
+}
+
+function validateWorkflowRunShape(run, schema, issues) {
   if (!isObject(run)) {
     issues.push("workflow-run.json must be an object");
     return;
   }
+
+  validateAgainstSchema(run, schema, issues);
 
   if (typeof run.workflow !== "string" || run.workflow.trim() === "") {
     issues.push("workflow-run.json workflow must be a non-empty string");
@@ -212,7 +279,8 @@ let run = null;
 const workflowRunPath = path.join(root, "workflow-run.json");
 if (fs.existsSync(workflowRunPath)) {
   run = readJson(workflowRunPath, issues, "workflow-run.json");
-  validateWorkflowRunShape(run, issues);
+  const schema = readJson(schemaPath, issues, "workflow-run.schema.json");
+  validateWorkflowRunShape(run, schema, issues);
   validateArtifactPaths(root, run, issues, requiredFiles);
   if (strict) validateStrictCompletion(run, issues);
 }
